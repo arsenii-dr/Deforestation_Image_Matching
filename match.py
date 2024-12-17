@@ -16,19 +16,19 @@ matcher = LoFTR_Matcher(IMAGE_SIZE)
 def outputs_matches(image0, image1, conf=0.8, accurate=False):
     corresp = matcher(image0, image1, conf, accurate)
 
-    # Перевірка, чи є інлієри
+    # Inliers check
     if corresp['inliers'] is None:
         print("No inliers found. Skipping these images.")
         return
 
-    # Якщо інлієри є, обчислюємо кількість і виводимо результат
+    # If there are inliers, count the quantity and print the result
     keypoints_num = len(corresp['inliers'])
     inliers_num = sum(corresp['inliers'])[0]
     ratio = inliers_num / float(keypoints_num)
 
     print(f'Key points: {keypoints_num}, Inlier points: {inliers_num}, Ratio: {ratio:.2f}')
 
-    # Візуалізація збігів
+    # Visualization
     matcher.draw_matches(corresp)
 
     img_ids = [0, 6, 16, 18]
